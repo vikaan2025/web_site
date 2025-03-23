@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikaan Home Bakery</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: #FFF9F3;
+            color: #5A3825;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Georgia', serif;
+            color: #8B4513;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #E49B63;
+            margin: 10px auto;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #E49B63;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #8B4513;
+            transform: translateY(-3px);
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 249, 243, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Georgia', serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+        
+        .logo span {
+            color: #E49B63;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #5A3825;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #E49B63;
+        }
+        
+        .toggle-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #8B4513;
+        }
+        
+        /* Hero Section */
+        #home {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/800') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 0;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        /* About Section */
+        #about {
+            background-color: #FFF9F3;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-img {
+            flex: 1;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        /* Products Section */
+        #products {
+            background-color: #FFF0E5;
+        }
+        
+        .product-categories {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .category-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #5A3825;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            color: #E49B63;
+            border-bottom: 2px solid #E49B63;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #E49B63;
+            margin-bottom: 15px;
+        }
+        
+        /* Contact Section */
+        #contact {
+            background-color: #FFF9F3;
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info-item i {
+            margin-right: 15px;
+            color: #E49B63;
+            font-size: 20px;
+        }
+        
+        .contact-form {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #5A3825;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .toggle-menu {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: #FFF9F3;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: all 0.3s ease;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Vik<span>aan</span></div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="toggle-menu">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Delicious Homemade Bakery Treats</h1>
+                <p>Indulge in our freshly baked cakes, brownies, and pastries made with love and the finest ingredients</p>
+                <a href="#products" class="btn">Explore Our Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="main.png" alt="Bakery kitchen">
+                </div>
+                <div class="about-text">
+                    <h3>Welcome to Vikaan Home Bakery</h3>
+                    <p>At Vikkan, we believe that every sweet treat should be a moment of pure joy. Our journey began in a small home kitchen with a passion for creating delicious baked goods that bring smiles to people's faces.</p>
+                    <p>We take pride in using only the finest ingredients, with no artificial preservatives or flavors. Each item is baked fresh daily in small batches to ensure quality and taste that you can truly savor.</p>
+                    <p>From classic cakes to decadent brownies and artisanal pastries, our diverse menu offers something for every occasion and taste preference.</p>
+                    <a href="#products" class="btn">View Our Creations</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products">
+        <div class="container">
+            <h2>Our Products</h2>
+            <div class="product-categories">
+                <button class="category-btn active">All</button>
+                <button class="category-btn">Cakes</button>
+                <button class="category-btn">Brownies</button>
+                <button class="category-btn">Pastries</button>
+            </div>
+            <div class="product-grid">
+                <!-- Cakes -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Chocolate_Fudge_Cake.png')"></div>
+                    <div class="product-info">
+                        <h3>Chocolate Fudge Cake</h3>
+                        <p>Rich chocolate layers with fudge filling and ganache frosting.</p>
+                        <div class="product-price">₹550</div>
+                        <button class="btn">Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Vanilla_Bean_Cake.png')"></div>
+                    <div class="product-info">
+                        <h3>Vanilla Bean Cake</h3>
+                        <p>Light vanilla sponge with buttercream frosting and fresh berries.</p>
+                        <div class="product-price">₹600</div>
+                        <button class="btn">Order Now</button>
+                    </div>
+                </div>
+                
+                <!-- Brownies -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Classic_Fudge_Brownies.png')"></div>
+                    <div class="product-info">
+                        <h3>Classic Fudge Brownies</h3>
+                        <p>Rich, dense chocolate brownies with a crackly top.</p>
+                        <div class="product-price">₹55 each</div>
+                        <button class="btn">Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Salted_Caramel_Brownies.png')"></div>
+                    <div class="product-info">
+                        <h3>Salted Caramel Brownies</h3>
+                        <p>Fudgy brownies swirled with homemade salted caramel.</p>
+                        <div class="product-price">₹70 each</div>
+                        <button class="btn">Order Now</button>
+                    </div>
+                </div>
+                
+                <!-- Pastries -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Almond_Croissants.png')"></div>
+                    <div class="product-info">
+                        <h3>Almond Croissants</h3>
+                        <p>Buttery croissants filled with almond cream and topped with sliced almonds.</p>
+                        <div class="product-price">₹80 each</div>
+                        <button class="btn">Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Cinnamon_Rolls.png')"></div>
+                    <div class="product-info">
+                        <h3>Cinnamon Rolls</h3>
+                        <p>Soft, fluffy rolls with cinnamon filling and cream cheese frosting.</p>
+                        <div class="product-price">₹90 each</div>
+                        <button class="btn">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>Have a question or want to place an order? Reach out to us!</p>
+                    
+                    <div class="contact-info-item">
+                        <i>📍</i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>NO: 183/2 ,Kothattai main road, Eraiyur, Pennadam (rs) , Tamil Nadu 600 001</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <i>📞</i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+91 96005114599</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <i>✉️</i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>vikaanbakes@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <i>⏰</i>
+                        <div>
+                            <h4>Hours</h4>
+                            <p>Monday - Friday: 7:00 AM - 6:00 PM</p>
+                            <p>Saturday: 8:00 AM - 4:00 PM</p>
+                            <p>Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="What would you like to order?"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">Vik<span>aan</span></div>
+                <p>Delicious homemade bakery treats made with love</p>
+                
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Pinterest</a>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Vikaan Home Bakery. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const toggleMenu = document.querySelector('.toggle-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        toggleMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Product Category Filter
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter products functionality would go here
+                // This would be connected to actual product data in a real implementation
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
